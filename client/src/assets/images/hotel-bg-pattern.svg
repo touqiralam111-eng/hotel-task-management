@@ -1,0 +1,9 @@
+echo ^<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"^> > hotel-bg-pattern.svg
+echo   ^<defs^> >> hotel-bg-pattern.svg
+echo     ^<pattern id="pattern" width="20" height="20" patternUnits="userSpaceOnUse"^> >> hotel-bg-pattern.svg
+echo       ^<rect width="20" height="20" fill="#f5f5f0"/^> >> hotel-bg-pattern.svg
+echo       ^<path d="M10 0L20 10L10 20L0 10Z" fill="#e8e5d8" opacity="0.3"/^> >> hotel-bg-pattern.svg
+echo     ^</pattern^> >> hotel-bg-pattern.svg
+echo   ^</defs^> >> hotel-bg-pattern.svg
+echo   ^<rect width="100" height="100" fill="url(#pattern)"/^> >> hotel-bg-pattern.svg
+echo ^</svg^> >> hotel-bg-pattern.svg
