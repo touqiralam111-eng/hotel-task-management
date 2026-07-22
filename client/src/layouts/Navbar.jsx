@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api, { SERVER_URL } from '../services/api';
 import {
   MagnifyingGlassIcon,
   BellIcon,
@@ -27,7 +27,7 @@ const Navbar = () => {
 
   const fetchNotifications = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/notifications');
+      const res = await api.get('/notifications');
       setNotifications(res.data.data || []);
       setUnreadCount(res.data.unreadCount || 0);
     } catch (error) {
@@ -37,7 +37,7 @@ const Navbar = () => {
 
   const markAsRead = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/notifications/${id}/read`);
+      await api.put(`/notifications/${id}/read`);
       fetchNotifications();
     } catch (error) {
       console.error('Error marking notification as read:', error);
@@ -54,7 +54,7 @@ const Navbar = () => {
     if (user.avatar.startsWith('http')) {
       return user.avatar;
     }
-    return `http://localhost:5000${user.avatar}`;
+    return `${SERVER_URL}${user.avatar}`;
   };
 
   return (

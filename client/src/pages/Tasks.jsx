@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import TaskCard from '../components/tasks/TaskCard';
@@ -24,7 +24,7 @@ const Tasks = () => {
 
   const fetchTasks = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/tasks', {
+      const res = await api.get('/tasks', {
         params: { ...filters, search }
       });
       setTasks(res.data.data);
@@ -39,7 +39,7 @@ const Tasks = () => {
     if (!window.confirm('Are you sure you want to delete this task?')) return;
     
     try {
-      await axios.delete(`http://localhost:5000/api/tasks/${taskId}`);
+      await api.delete(`/tasks/${taskId}`);
       toast.success('Task deleted successfully!');
       fetchTasks();
     } catch (error) {
@@ -49,7 +49,7 @@ const Tasks = () => {
 
   const handleStatusUpdate = async (taskId, status) => {
     try {
-      await axios.patch(`http://localhost:5000/api/tasks/${taskId}/status`, { status });
+      await api.patch(`/tasks/${taskId}/status`, { status });
       toast.success(`Task status updated to ${status}`);
       fetchTasks();
     } catch (error) {
@@ -59,7 +59,7 @@ const Tasks = () => {
 
   const handleArchiveTask = async (taskId) => {
     try {
-      await axios.put(`http://localhost:5000/api/tasks/${taskId}/archive`);
+      await api.put(`/tasks/${taskId}/archive`);
       toast.success('Task archived!');
       fetchTasks();
     } catch (error) {

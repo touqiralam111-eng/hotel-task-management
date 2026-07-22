@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import { format } from 'date-fns';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
@@ -17,7 +17,7 @@ const TaskDetails = () => {
 
   const fetchTask = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/tasks/${id}`);
+      const res = await api.get(`/tasks/${id}`);
       setTask(res.data.data);
     } catch (error) {
       console.error('Error fetching task:', error);
@@ -28,7 +28,7 @@ const TaskDetails = () => {
 
   const updateStatus = async (status) => {
     try {
-      await axios.patch(`http://localhost:5000/api/tasks/${id}/status`, { status });
+      await api.patch(`/tasks/${id}/status`, { status });
       fetchTask();
     } catch (error) {
       console.error('Error updating status:', error);
@@ -39,7 +39,7 @@ const TaskDetails = () => {
     e.preventDefault();
     if (!note.trim()) return;
     try {
-      await axios.post(`http://localhost:5000/api/tasks/${id}/notes`, { text: note });
+      await api.post(`/tasks/${id}/notes`, { text: note });
       setNote('');
       fetchTask();
     } catch (error) {

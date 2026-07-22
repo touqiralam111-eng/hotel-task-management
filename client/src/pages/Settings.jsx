@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
-import axios from 'axios';
+import api from '../services/api';
 import { SunIcon, MoonIcon, ComputerDesktopIcon } from '@heroicons/react/24/outline';
 
 const Settings = () => {
@@ -19,7 +19,7 @@ const Settings = () => {
 
   const fetchSettings = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/users/settings');
+      const res = await api.get('/users/settings');
       const data = res.data.data;
       setSettings({
         theme: data.theme || 'light',
@@ -36,7 +36,7 @@ const Settings = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.put('http://localhost:5000/api/users/settings', settings);
+      const res = await api.put('/users/settings', settings);
       toast.success(res.data.message || 'Settings updated successfully!');
       
       setTheme(settings.theme);

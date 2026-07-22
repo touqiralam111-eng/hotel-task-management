@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import toast from 'react-hot-toast';
 
 const CreateTask = () => {
@@ -25,7 +25,7 @@ const CreateTask = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/users');
+      const res = await api.get('/users');
       setUsers(res.data.data || []);
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -34,7 +34,7 @@ const CreateTask = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/categories');
+      const res = await api.get('/categories');
       setCategories(res.data.data || []);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -45,7 +45,7 @@ const CreateTask = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/tasks', formData);
+      await api.post('/tasks', formData);
       toast.success('Task created successfully!');
       navigate('/tasks');
     } catch (error) {

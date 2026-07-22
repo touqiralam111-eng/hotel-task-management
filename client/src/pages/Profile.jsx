@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
+import api, { SERVER_URL } from '../services/api';
 import toast from 'react-hot-toast';
 import { CameraIcon } from '@heroicons/react/24/outline';
 
@@ -67,8 +67,8 @@ const Profile = () => {
 
     setUploading(true);
     try {
-      const res = await axios.post(
-        'http://localhost:5000/api/users/upload-photo',
+      const res = await api.post(
+        '/users/upload-photo',
         formData,
         { 
           headers: { 'Content-Type': 'multipart/form-data' },
@@ -112,7 +112,7 @@ const Profile = () => {
     }
     setLoading(true);
     try {
-      const res = await axios.put('http://localhost:5000/api/users/profile', formData);
+      const res = await api.put('/users/profile', formData);
       setUser(res.data.data);
       setIsDirty(false);
       toast.success('Profile updated successfully!');
@@ -135,7 +135,7 @@ const Profile = () => {
     }
     setLoading(true);
     try {
-      await axios.put('http://localhost:5000/api/auth/change-password', passwordData);
+      await api.put('/auth/change-password', passwordData);
       toast.success('Password changed successfully!');
       setPasswordData({ currentPassword: '', newPassword: '' });
     } catch (error) {
@@ -152,7 +152,7 @@ const Profile = () => {
     if (user.avatar.startsWith('http')) {
       return user.avatar;
     }
-    return `http://localhost:5000${user.avatar}`;
+    return `${SERVER_URL}${user.avatar}`;
   };
 
   return (

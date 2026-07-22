@@ -1,5 +1,6 @@
 import React from 'react';
 import { UserIcon } from '@heroicons/react/24/outline';
+import { SERVER_URL } from '../../services/api';
 
 const UserCard = ({ user }) => {
   // Function to get correct avatar URL
@@ -16,7 +17,7 @@ const UserCard = ({ user }) => {
     
     // For local uploads, prepend server URL
     if (user.avatar.startsWith('/uploads/')) {
-      return `http://localhost:5000${user.avatar}`;
+      return `${SERVER_URL}${user.avatar}`;
     }
     
     // Fallback to UI Avatars

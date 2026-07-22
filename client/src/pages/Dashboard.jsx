@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import DashboardStats from '../components/dashboard/DashboardStats';
 import RecentActivity from '../components/dashboard/RecentActivity';
 import UpcomingTasks from '../components/dashboard/UpcomingTasks';
@@ -15,7 +15,7 @@ const Dashboard = () => {
 
   const fetchStats = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/tasks/stats');
+      const res = await api.get('/tasks/stats');
       setStats(res.data.data);
     } catch (error) {
       console.error('Error fetching stats:', error);

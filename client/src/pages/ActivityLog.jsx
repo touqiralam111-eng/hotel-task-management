@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { format } from 'date-fns';
 import LoadingSkeleton from '../components/common/LoadingSkeleton';
 
@@ -13,7 +13,7 @@ const ActivityLog = () => {
 
   const fetchActivities = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/activities');
+      const res = await api.get('/activities');
       setActivities(res.data.data || []);
     } catch (error) {
       console.error('Error fetching activities:', error);

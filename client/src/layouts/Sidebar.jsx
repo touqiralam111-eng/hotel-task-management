@@ -11,6 +11,7 @@ import {
   Bars3Icon
 } from '@heroicons/react/24/outline';
 import { useAuth } from '../context/AuthContext';
+import { SERVER_URL } from '../services/api';
 
 const Sidebar = () => {
   const { user } = useAuth();
@@ -101,7 +102,7 @@ const Sidebar = () => {
         <div className="p-4 border-t border-gray-200">
           <div className="flex items-center gap-3 px-2">
             <img
-              src={user?.avatar ? `http://localhost:5000${user.avatar}` : `https://ui-avatars.com/api/?name=${user?.name || 'User'}&background=C9A84C&color=fff&size=40`}
+              src={user?.avatar ? `${SERVER_URL}${user.avatar}` : `https://ui-avatars.com/api/?name=${user?.name || 'User'}&background=C9A84C&color=fff&size=40`}
               alt={user?.name}
               className="w-8 h-8 rounded-full object-cover border-2 border-gold"
               onError={(e) => {

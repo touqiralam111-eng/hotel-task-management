@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import toast from 'react-hot-toast';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
@@ -29,7 +29,7 @@ const EditTask = () => {
 
   const fetchTask = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/tasks/${id}`);
+      const res = await api.get(`/tasks/${id}`);
       const task = res.data.data;
       setFormData({
         title: task.title,
@@ -50,7 +50,7 @@ const EditTask = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/users');
+      const res = await api.get('/users');
       setUsers(res.data.data || []);
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -59,7 +59,7 @@ const EditTask = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/categories');
+      const res = await api.get('/categories');
       setCategories(res.data.data || []);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -70,7 +70,7 @@ const EditTask = () => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await axios.put(`http://localhost:5000/api/tasks/${id}`, formData);
+      await api.put(`/tasks/${id}`, formData);
       toast.success('Task updated successfully!');
       navigate('/tasks');
     } catch (error) {
