@@ -38,10 +38,11 @@ io.on('connection', (socket) => {
 app.set('io', io);
 
 // Routes
-// Add this route in server/server.js
+// Routes - THESE MUST EXIST
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
+
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/tasks', require('./routes/taskRoutes'));
@@ -49,7 +50,7 @@ app.use('/api/categories', require('./routes/categoryRoutes'));
 app.use('/api/activities', require('./routes/activityRoutes'));
 app.use('/api/notifications', require('./routes/notificationRoutes'));
 
-// Error handling
+// Error handler - MUST BE LAST
 app.use(require('./middleware/errorHandler'));
 
 // MongoDB Connection
