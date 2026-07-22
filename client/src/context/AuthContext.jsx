@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import axios from 'axios';
 import toast from 'react-hot-toast';
+import api from '../services/api';  // ✅ Use the api service
 
 const AuthContext = createContext();
 
@@ -15,35 +15,30 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(localStorage.getItem('token'));
-  
+
   // Initialize theme - default to 'light'
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
     return savedTheme || 'light';
   });
 
-  // Apply theme - FORCE LIGHT FIRST
+  // Apply theme
   useEffect(() => {
     let appliedTheme = theme;
     if (theme === 'system') {
       appliedTheme = getSystemTheme();
     }
-    
-    // Remove any existing theme attributes
+
     document.documentElement.removeAttribute('data-theme');
-    
-    // Set the theme attribute
     document.documentElement.setAttribute('data-theme', appliedTheme);
-    
-    // Also handle dark class for Tailwind
+
     if (appliedTheme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
-    
+
     localStorage.setItem('theme', theme);
-    console.log('Theme applied:', appliedTheme); // Debug log
   }, [theme]);
 
   // Listen for system theme changes
@@ -64,9 +59,11 @@ export const AuthProvider = ({ children }) => {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, [theme]);
 
+  // Load user if token exists
   useEffect(() => {
     if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      // Set default Authorization header for api
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       loadUser();
     } else {
       setLoading(false);
@@ -75,7 +72,7 @@ export const AuthProvider = ({ children }) => {
 
   const loadUser = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/auth/me');
+      const res = await api.get('/auth/me');  // ✅ Uses api
       setUser(res.data.user);
       if (res.data.user?.settings?.theme) {
         setTheme(res.data.user.settings.theme);
@@ -83,23 +80,27 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       localStorage.removeItem('token');
       setToken(null);
-      delete axios.defaults.headers.common['Authorization'];
+      delete api.defaults.headers.common['Authorization'];
     } finally {
       setLoading(false);
     }
   };
 
+  // ✅ LOGIN - uses api
   const login = async (email, password) => {
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const res = await api.post('/auth/login', { email, password });
       const { token, user } = res.data;
+
       localStorage.setItem('token', token);
       setToken(token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       setUser(user);
+
       if (user?.settings?.theme) {
         setTheme(user.settings.theme);
       }
+
       toast.success('Login successful!');
       return { success: true };
     } catch (error) {
@@ -108,14 +109,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // ✅ REGISTER - uses api
   const register = async (userData) => {
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/register', userData);
+      const res = await api.post('/auth/register', userData);
       const { token, user } = res.data;
+
       localStorage.setItem('token', token);
       setToken(token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       setUser(user);
+
       toast.success('Registration successful!');
       return { success: true };
     } catch (error) {
@@ -128,7 +132,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token');
     setToken(null);
     setUser(null);
-    delete axios.defaults.headers.common['Authorization'];
+    delete api.defaults.headers.common['Authorization'];
     toast.success('Logged out successfully');
   };
 
