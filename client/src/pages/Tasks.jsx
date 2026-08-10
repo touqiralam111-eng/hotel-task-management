@@ -14,8 +14,6 @@ const Tasks = () => {
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({});
   const [search, setSearch] = useState('');
-  const [selectedTask, setSelectedTask] = useState(null);
-  const [showModal, setShowModal] = useState(false);
   const [isAdmin, setIsAdmin] = useState(user?.role === 'admin');
 
   useEffect(() => {
@@ -37,7 +35,6 @@ const Tasks = () => {
 
   const handleDeleteTask = async (taskId) => {
     if (!window.confirm('Are you sure you want to delete this task?')) return;
-
     try {
       await api.delete(`/tasks/${taskId}`);
       toast.success('Task deleted successfully!');
@@ -86,49 +83,30 @@ const Tasks = () => {
 
       <TaskFilters filters={filters} setFilters={setFilters} />
 
-      {/* Admin Action Buttons */}
       {isAdmin && (
         <div className="flex gap-2 mt-4 mb-4 flex-wrap">
-          <button
-            onClick={() => setFilters({})}
-            className="px-3 py-1 bg-blue-100 text-blue-700 rounded-md text-sm hover:bg-blue-200"
-          >
+          <button onClick={() => setFilters({})} className="px-3 py-1 bg-blue-100 text-blue-700 rounded-md text-sm hover:bg-blue-200">
             All Tasks
           </button>
-          <button
-            onClick={() => setFilters({ status: 'todo' })}
-            className="px-3 py-1 bg-gray-100 text-gray-700 rounded-md text-sm hover:bg-gray-200"
-          >
+          <button onClick={() => setFilters({ status: 'todo' })} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-md text-sm hover:bg-gray-200">
             To Do
           </button>
-          <button
-            onClick={() => setFilters({ status: 'in-progress' })}
-            className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-md text-sm hover:bg-yellow-200"
-          >
+          <button onClick={() => setFilters({ status: 'in-progress' })} className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-md text-sm hover:bg-yellow-200">
             In Progress
           </button>
-          <button
-            onClick={() => setFilters({ status: 'completed' })}
-            className="px-3 py-1 bg-green-100 text-green-700 rounded-md text-sm hover:bg-green-200"
-          >
+          <button onClick={() => setFilters({ status: 'completed' })} className="px-3 py-1 bg-green-100 text-green-700 rounded-md text-sm hover:bg-green-200">
             Completed
           </button>
-          <button
-            onClick={() => setFilters({ priority: 'high' })}
-            className="px-3 py-1 bg-red-100 text-red-700 rounded-md text-sm hover:bg-red-200"
-          >
+          <button onClick={() => setFilters({ priority: 'high' })} className="px-3 py-1 bg-red-100 text-red-700 rounded-md text-sm hover:bg-red-200">
             High Priority
           </button>
         </div>
       )}
 
-      {/* Task List */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
         {tasks.map(task => (
           <div key={task._id} className="relative">
             <TaskCard task={task} />
-
-            {/* Admin Actions */}
             {isAdmin && (
               <div className="absolute top-2 right-2 flex gap-1">
                 <button
@@ -175,5 +153,8 @@ const Tasks = () => {
           )}
         </div>
       )}
+    </div>
+  );
+};
 
-      export default Tasks;
+export default Tasks;

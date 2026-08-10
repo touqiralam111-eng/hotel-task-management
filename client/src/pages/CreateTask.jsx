@@ -136,7 +136,9 @@ const CreateTask = () => {
             Cancel
           </button>
         </div>
-        );
+      </form>
+    </div>
+  );
 };
 
-        export default CreateTask;
+export default CreateTask;
