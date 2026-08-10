@@ -21,11 +21,11 @@ const Profile = () => {
   const [passwordData, setPasswordData] = useState({
     currentPassword: '',
     newPassword: ''
-    });
+  });
 
   // Track changes
   useEffect(() => {
-    const hasChanges = 
+    const hasChanges =
       formData.name !== user?.name ||
       formData.email !== user?.email ||
       formData.phone !== user?.phone ||
@@ -70,7 +70,7 @@ const Profile = () => {
       const res = await api.post(
         '/users/upload-photo',
         formData,
-        { 
+        {
           headers: { 'Content-Type': 'multipart/form-data' },
           onUploadProgress: (progressEvent) => {
             const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
@@ -78,7 +78,7 @@ const Profile = () => {
           }
         }
       );
-      
+
       if (res.data.success) {
         setUser(res.data.data);
         setPreview(null);
@@ -123,27 +123,33 @@ const Profile = () => {
     }
   };
 
-  const handlePasswordChange = async (e) => {
-    e.preventDefault();
-    if (!passwordData.currentPassword || !passwordData.newPassword) {
-      toast.error('Please fill in all password fields');
-      return;
-    }
-    if (passwordData.newPassword.length < 6) {
-      toast.error('New password must be at least 6 characters');
-      return;
-    }
-    setLoading(true);
-    try {
-      await api.put('/auth/change-password', passwordData);
-      toast.success('Password changed successfully!');
-      setPasswordData({ currentPassword: '', newPassword: '' });
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to change password');
-    } finally {
-      setLoading(false);
-    }
-  };
+  {/* Change Password */ }
+  <div className="bg-white rounded-lg shadow p-6">
+    <h2 className="text-lg font-semibold mb-4">Change Password</h2>
+    <form onSubmit={handlePasswordChange} className="space-y-4">
+      <input
+        type="password"
+        placeholder="Current Password"
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+        value={passwordData.currentPassword}
+        onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
+      />
+      <input
+        type="password"
+        placeholder="New Password (min 6 characters)"
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+        value={passwordData.newPassword}
+        onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
+      />
+      <button
+        type="submit"
+        disabled={loading}
+        className="btn-change-password"
+      >
+        {loading ? 'Changing...' : 'Change Password'}
+      </button>
+    </form>
+  </div>
 
   const getAvatarUrl = () => {
     if (!user?.avatar || user.avatar === 'default-avatar.png') {
@@ -158,7 +164,7 @@ const Profile = () => {
   return (
     <div className="max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold text-gray-900 mb-6">Profile Settings</h1>
-      
+
       {/* Profile Photo Section */}
       <div className="bg-white rounded-lg shadow p-6 mb-6">
         <h2 className="text-lg font-semibold mb-4">Profile Photo</h2>
@@ -252,26 +258,26 @@ const Profile = () => {
             placeholder="Full Name"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
             value={formData.name}
-            onChange={(e) => setFormData({...formData, name: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
           <input
             type="email"
             placeholder="Email Address"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
             value={formData.email}
-            onChange={(e) => setFormData({...formData, email: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           />
           <input
             type="tel"
             placeholder="Phone Number"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
             value={formData.phone}
-            onChange={(e) => setFormData({...formData, phone: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
           />
           <select
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
             value={formData.department}
-            onChange={(e) => setFormData({...formData, department: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, department: e.target.value })}
           >
             <option value="">Select Department</option>
             <option value="Housekeeping">Housekeeping</option>
@@ -284,11 +290,10 @@ const Profile = () => {
           <button
             type="submit"
             disabled={loading || !isDirty}
-            className={`w-full py-2 rounded-md transition-colors ${
-              isDirty 
-                ? 'bg-primary-600 text-white hover:bg-primary-700' 
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-            }`}
+            className={`w-full py-2 rounded-md transition-colors ${isDirty
+              ? 'bg-primary-600 text-white hover:bg-primary-700'
+              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              }`}
           >
             {loading ? 'Updating...' : isDirty ? 'Update Profile' : 'No Changes'}
           </button>
@@ -304,14 +309,14 @@ const Profile = () => {
             placeholder="Current Password"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
             value={passwordData.currentPassword}
-            onChange={(e) => setPasswordData({...passwordData, currentPassword: e.target.value})}
+            onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
           />
           <input
             type="password"
             placeholder="New Password (min 6 characters)"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
             value={passwordData.newPassword}
-            onChange={(e) => setPasswordData({...passwordData, newPassword: e.target.value})}
+            onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
           />
           <button
             type="submit"

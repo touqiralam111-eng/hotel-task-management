@@ -37,7 +37,7 @@ const Tasks = () => {
 
   const handleDeleteTask = async (taskId) => {
     if (!window.confirm('Are you sure you want to delete this task?')) return;
-    
+
     try {
       await api.delete(`/tasks/${taskId}`);
       toast.success('Task deleted successfully!');
@@ -85,36 +85,36 @@ const Tasks = () => {
       </div>
 
       <TaskFilters filters={filters} setFilters={setFilters} />
-      
+
       {/* Admin Action Buttons */}
       {isAdmin && (
         <div className="flex gap-2 mt-4 mb-4 flex-wrap">
-          <button 
-            onClick={() => setFilters({})} 
+          <button
+            onClick={() => setFilters({})}
             className="px-3 py-1 bg-blue-100 text-blue-700 rounded-md text-sm hover:bg-blue-200"
           >
             All Tasks
           </button>
-          <button 
-            onClick={() => setFilters({ status: 'todo' })} 
+          <button
+            onClick={() => setFilters({ status: 'todo' })}
             className="px-3 py-1 bg-gray-100 text-gray-700 rounded-md text-sm hover:bg-gray-200"
           >
             To Do
           </button>
-          <button 
-            onClick={() => setFilters({ status: 'in-progress' })} 
+          <button
+            onClick={() => setFilters({ status: 'in-progress' })}
             className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-md text-sm hover:bg-yellow-200"
           >
             In Progress
           </button>
-          <button 
-            onClick={() => setFilters({ status: 'completed' })} 
+          <button
+            onClick={() => setFilters({ status: 'completed' })}
             className="px-3 py-1 bg-green-100 text-green-700 rounded-md text-sm hover:bg-green-200"
           >
             Completed
           </button>
-          <button 
-            onClick={() => setFilters({ priority: 'high' })} 
+          <button
+            onClick={() => setFilters({ priority: 'high' })}
             className="px-3 py-1 bg-red-100 text-red-700 rounded-md text-sm hover:bg-red-200"
           >
             High Priority
@@ -127,7 +127,7 @@ const Tasks = () => {
         {tasks.map(task => (
           <div key={task._id} className="relative">
             <TaskCard task={task} />
-            
+
             {/* Admin Actions */}
             {isAdmin && (
               <div className="absolute top-2 right-2 flex gap-1">
@@ -169,14 +169,11 @@ const Tasks = () => {
         <div className="text-center py-12">
           <p className="text-gray-500">No tasks found</p>
           {isAdmin && (
-            <Link to="/create-task" className="text-primary-600 hover:underline mt-2 inline-block">
-              Create your first task
+            <Link to="/create-task" className="link-create-task mt-2 inline-block">
+              ✨ Create your first task
             </Link>
           )}
         </div>
       )}
-    </div>
-  );
-};
 
-export default Tasks;
+      export default Tasks;

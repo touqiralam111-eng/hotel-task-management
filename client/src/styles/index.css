@@ -231,59 +231,98 @@ body {
 /* ============================================
    BUTTONS
    ============================================ */
+/* ============================================
+   BUTTON COLOR FIXES - ADD AT THE END
+   ============================================ */
 
-.btn-primary {
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-  color: #ffffff;
-  padding: 10px 24px;
-  border-radius: 10px;
+/* Change Password Button */
+.btn-change-password {
+  background: linear-gradient(135deg, #C9A84C, #d4af37) !important;
+  color: #ffffff !important;
+  padding: 12px 24px;
+  border-radius: 8px;
   font-weight: 600;
-  transition: all 0.3s ease;
   border: none;
   cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
 }
 
-.btn-primary:hover {
+.btn-change-password:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(201, 168, 76, 0.35);
+  box-shadow: 0 6px 20px rgba(201, 168, 76, 0.4);
 }
 
-.btn-primary:disabled {
+.btn-change-password:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
 }
 
-.btn-secondary {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  padding: 10px 24px;
-  border-radius: 10px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  border: 1px solid var(--border-color);
+/* Create Task Button */
+.btn-create-task {
+  background: linear-gradient(135deg, #C9A84C, #d4af37) !important;
+  color: #ffffff !important;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
   cursor: pointer;
-}
-
-.btn-secondary:hover {
-  background: var(--hover-bg);
-  border-color: var(--gold);
-}
-
-.btn-outline-gold {
-  background: transparent;
-  color: var(--gold);
-  padding: 8px 20px;
-  border-radius: 10px;
-  font-weight: 500;
   transition: all 0.3s ease;
-  border: 1.5px solid var(--gold);
-  cursor: pointer;
+  flex: 1;
 }
 
-.btn-outline-gold:hover {
-  background: var(--gold);
-  color: #ffffff;
+.btn-create-task:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(201, 168, 76, 0.4);
+}
+
+.btn-create-task:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* "Create your first task" link */
+.link-create-task {
+  color: #C9A84C !important;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.link-create-task:hover {
+  color: #b8942f !important;
+  text-decoration: underline;
+}
+
+/* Update Profile Button - Keep existing but ensure color */
+button[type="submit"] {
+  background: linear-gradient(135deg, #C9A84C, #d4af37) !important;
+  color: #ffffff !important;
+}
+
+button[type="submit"]:disabled {
+  background: #d1d5db !important;
+  color: #6b7280 !important;
+  cursor: not-allowed;
+}
+
+/* Cancel buttons */
+.btn-cancel {
+  background: #e5e7eb !important;
+  color: #374151 !important;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.btn-cancel:hover {
+  background: #d1d5db !important;
 }
 
 /* ============================================

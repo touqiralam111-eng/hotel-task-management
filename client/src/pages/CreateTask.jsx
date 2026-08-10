@@ -65,7 +65,7 @@ const CreateTask = () => {
           placeholder="Task Title"
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
           value={formData.title}
-          onChange={(e) => setFormData({...formData, title: e.target.value})}
+          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
         />
         <textarea
           required
@@ -73,13 +73,13 @@ const CreateTask = () => {
           rows="4"
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
           value={formData.description}
-          onChange={(e) => setFormData({...formData, description: e.target.value})}
+          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
         />
         <select
           required
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
           value={formData.assignedTo}
-          onChange={(e) => setFormData({...formData, assignedTo: e.target.value})}
+          onChange={(e) => setFormData({ ...formData, assignedTo: e.target.value })}
         >
           <option value="">Assign To</option>
           {users.map(user => (
@@ -90,7 +90,7 @@ const CreateTask = () => {
           required
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
           value={formData.category}
-          onChange={(e) => setFormData({...formData, category: e.target.value})}
+          onChange={(e) => setFormData({ ...formData, category: e.target.value })}
         >
           <option value="">Select Category</option>
           {categories.map(cat => (
@@ -100,7 +100,7 @@ const CreateTask = () => {
         <select
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
           value={formData.priority}
-          onChange={(e) => setFormData({...formData, priority: e.target.value})}
+          onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
         >
           <option value="low">Low Priority</option>
           <option value="medium">Medium Priority</option>
@@ -111,34 +111,32 @@ const CreateTask = () => {
           required
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
           value={formData.dueDate}
-          onChange={(e) => setFormData({...formData, dueDate: e.target.value})}
+          onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
         />
         <textarea
           placeholder="Additional Notes"
           rows="2"
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500"
           value={formData.notes}
-          onChange={(e) => setFormData({...formData, notes: e.target.value})}
+          onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
         />
         <div className="flex gap-2">
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 bg-primary-600 text-white py-2 rounded-md hover:bg-primary-700 disabled:opacity-50"
+            className="btn-create-task"
           >
             {loading ? 'Creating...' : 'Create Task'}
           </button>
           <button
             type="button"
             onClick={() => navigate('/tasks')}
-            className="flex-1 bg-gray-200 text-gray-800 py-2 rounded-md hover:bg-gray-300"
+            className="btn-cancel"
           >
             Cancel
           </button>
         </div>
-      </form>
-    </div>
-  );
+        );
 };
 
-export default CreateTask;
+        export default CreateTask;
